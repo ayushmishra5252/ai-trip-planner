@@ -380,12 +380,7 @@ Rating: ${rating ? `${rating}/5` : "Not rated yet"}
 
       <main className="max-w-6xl mx-auto px-5 py-10">
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="pt-4"
-          >
+          <div className="pt-4">
             <p className="text-sm font-semibold text-blue-600 mb-3">
               COLLEGE PROJECT SUBMISSION 2026
             </p>
@@ -503,13 +498,11 @@ Rating: ${rating ? `${rating}/5` : "Not rated yet"}
         )}
 
         {favorites.length > 0 && (
-          <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`mt-8 p-5 rounded-3xl shadow-md ${
-              darkMode ? "bg-gray-900" : "bg-white"
-            }`}
-          >
+  <div
+    className={`mt-8 p-5 rounded-3xl shadow-md ${
+      darkMode ? "bg-gray-900" : "bg-white"
+    }`}
+  >
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-bold">Favorite Destinations</h3>
               <button
@@ -544,12 +537,10 @@ Rating: ${rating ? `${rating}/5` : "Not rated yet"}
 
         {result && (
           <section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`mt-8 p-5 md:p-8 rounded-3xl shadow-xl ${
-              darkMode ? "bg-gray-900" : "bg-white"
-            }`}
-          >
+  className={`mt-8 p-5 md:p-8 rounded-3xl shadow-xl ${
+    darkMode ? "bg-gray-900" : "bg-white"
+  }`}
+>
             <h2 className="text-3xl font-bold mb-5">Your Smart Trip Plan</h2>
 
             <img
