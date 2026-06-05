@@ -1,5 +1,5 @@
 "use client";
-
+import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 
 export default function Home() {
@@ -447,13 +447,7 @@ return (
     </button>
 
     {aiAnswer && (
-      <div
-        className={`mt-5 p-5 rounded-2xl whitespace-pre-wrap ${
-          darkMode ? "bg-gray-800" : "bg-gray-100"
-        }`}
-      >
-        {aiAnswer}
-      </div>
+      import ReactMarkdown from "react-markdown";
     )}
   </section>
 
