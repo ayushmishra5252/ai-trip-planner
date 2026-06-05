@@ -15,6 +15,9 @@ export default function Home() {
   const [rating, setRating] = useState(0);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [aiQuery, setAiQuery] = useState("");
+  const [aiAnswer, setAiAnswer] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
 
   const destinationImages: Record<string, string> = {
     goa: "/images/goa.jpg",
@@ -340,10 +343,46 @@ Rating: ${rating ? `${rating}/5` : "Not rated yet"}
   };
 
   const clearAllFavorites = () => {
-    setFavorites([]);
-  };
+  setFavorites([]);
+};
 
-  return (
+const askAITripPlanner = async () => {
+  if (!aiQuery.trim()) {
+    alert("Please enter a travel query");
+    return;
+  }
+
+  setAiLoading(true);
+  setAiAnswer("");
+
+  try {
+    const response = await fetch("/api/ai-trip", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: aiQuery,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.error || "Something went wrong");
+      return;
+    }
+
+    setAiAnswer(data.answer);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to generate AI response");
+  } finally {
+    setAiLoading(false);
+  }
+};
+
+return (
     <div
       className={`min-h-screen ${
         darkMode
@@ -379,7 +418,46 @@ Rating: ${rating ? `${rating}/5` : "Not rated yet"}
       </nav>
 
       <main className="max-w-6xl mx-auto px-5 py-10">
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+  <section
+    className={`mb-8 p-6 rounded-3xl shadow-xl ${
+      darkMode ? "bg-gray-900" : "bg-white"
+    }`}
+  >
+    <h2 className="text-2xl font-bold mb-3">
+      🌐 AI Internet Trip Planner
+    </h2>
+
+    <p className="text-sm opacity-70 mb-4">
+      Ask anything and get a trip plan using live internet search.
+    </p>
+
+    <textarea
+      value={aiQuery}
+      onChange={(e) => setAiQuery(e.target.value)}
+      placeholder="Example: Plan a 5 day Goa trip with nightlife and beaches"
+      className="w-full border p-4 rounded-xl text-black min-h-[120px]"
+    />
+
+    <button
+      onClick={askAITripPlanner}
+      className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-5 py-3 rounded-xl font-bold"
+    >
+      {aiLoading ? "Searching Internet..." : "Ask AI"}
+    </button>
+
+    {aiAnswer && (
+      <div
+        className={`mt-5 p-5 rounded-2xl whitespace-pre-wrap ${
+          darkMode ? "bg-gray-800" : "bg-gray-100"
+        }`}
+      >
+        {aiAnswer}
+      </div>
+    )}
+  </section>
+
+  <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div className="pt-4">
             <p className="text-sm font-semibold text-blue-600 mb-3">
               COLLEGE PROJECT SUBMISSION 2026
