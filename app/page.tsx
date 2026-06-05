@@ -1,6 +1,7 @@
 "use client";
-import ReactMarkdown from "react-markdown";
+
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 export default function Home() {
   const [form, setForm] = useState({
@@ -447,8 +448,14 @@ return (
     </button>
 
     {aiAnswer && (
-      import ReactMarkdown from "react-markdown";
-    )}
+  <div
+    className={`mt-5 p-6 rounded-2xl leading-8 ${
+      darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"
+    }`}
+  >
+    <ReactMarkdown>{aiAnswer}</ReactMarkdown>
+  </div>
+)}
   </section>
 
   <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
