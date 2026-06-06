@@ -420,44 +420,68 @@ return (
 
       <main className="max-w-6xl mx-auto px-5 py-10">
 
-  <section
-    className={`mb-8 p-6 rounded-3xl shadow-xl ${
-      darkMode ? "bg-gray-900" : "bg-white"
-    }`}
-  >
-    <h2 className="text-2xl font-bold mb-3">
-      🌐 AI Internet Trip Planner
-    </h2>
+ <section
+  className={`mb-8 p-6 rounded-3xl shadow-xl ${
+    darkMode ? "bg-gray-900" : "bg-white"
+  }`}
+>
+  <h2 className="text-2xl font-bold mb-3">🌐 AI Internet Trip Planner</h2>
 
-    <p className="text-sm opacity-70 mb-4">
-      Ask anything and get a trip plan using live internet search.
-    </p>
+  <p className="text-sm opacity-70 mb-4">
+    Ask anything and get a trip plan using live internet search.
+  </p>
 
-    <textarea
-      value={aiQuery}
-      onChange={(e) => setAiQuery(e.target.value)}
-      placeholder="Example: Plan a 5 day Goa trip with nightlife and beaches"
-      className="w-full border p-4 rounded-xl text-black min-h-[120px]"
-    />
+  <textarea
+    value={aiQuery}
+    onChange={(e) => setAiQuery(e.target.value)}
+    placeholder="Example: Plan a 5 day Goa trip with nightlife and beaches"
+    className="w-full border p-4 rounded-xl text-black min-h-[120px]"
+  />
 
-    <button
-      onClick={askAITripPlanner}
-      className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-5 py-3 rounded-xl font-bold"
-    >
-      {aiLoading ? "Searching Internet..." : "Ask AI"}
-    </button>
-
-    {aiAnswer && (
-  <div
-    className={`mt-5 p-6 rounded-2xl leading-8 ${
-      darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"
-    }`}
-  >
-    <ReactMarkdown>{aiAnswer}</ReactMarkdown>
+  <div className="flex flex-wrap gap-2 mt-3">
+    {[
+      "Plan a 5 day Goa trip with nightlife",
+      "Luxury honeymoon trip to Manali",
+      "2 day Jaipur trip under ₹15000",
+      "Best food tour in Delhi",
+    ].map((prompt) => (
+      <button
+        key={prompt}
+        onClick={() => setAiQuery(prompt)}
+        className="bg-purple-100 text-purple-700 px-3 py-2 rounded-full text-sm"
+      >
+        {prompt}
+      </button>
+    ))}
   </div>
-)}
-  </section>
 
+  <button
+    onClick={askAITripPlanner}
+    className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-5 py-3 rounded-xl font-bold"
+  >
+    {aiLoading ? "✈️ Planning..." : "Ask AI"}
+  </button>
+
+  {aiAnswer && (
+    <div
+      className={`mt-5 p-6 rounded-2xl leading-8 ${
+        darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"
+      }`}
+    >
+      <button
+        onClick={() => {
+          navigator.clipboard.writeText(aiAnswer);
+          alert("AI trip plan copied!");
+        }}
+        className="mb-4 bg-black text-white px-4 py-2 rounded-xl"
+      >
+        Copy AI Plan
+      </button>
+
+      <ReactMarkdown>{aiAnswer}</ReactMarkdown>
+    </div>
+  )}
+</section>
   <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div className="pt-4">
             <p className="text-sm font-semibold text-blue-600 mb-3">
